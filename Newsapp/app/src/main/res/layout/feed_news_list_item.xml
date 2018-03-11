@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Layout for a single list item that displays an earthquake -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/size"
+    android:paddingLeft="@dimen/size"
+    android:paddingRight="@dimen/size"
+    android:paddingStart="@dimen/size">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        tools:text="Donald Trump to meet Kim Jong-un by May
+        after invitation from North Korea
+        " />
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Martin Zamarski" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Mar 8, 2018" />
+
+        <TextView
+            android:id="@+id/section"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Scify" />
+    </LinearLayout>
+
+</LinearLayout>
