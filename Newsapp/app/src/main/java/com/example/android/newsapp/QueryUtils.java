@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Helper methods related to requesting and receiving earthquake data from guardian.
+ * Helper methods related to requesting and receiving feedNews data from guardian.
  */
 public final class QueryUtils {
 
@@ -151,7 +151,7 @@ public final class QueryUtils {
             return null;
         }
 
-        // Create an empty ArrayList that we can start adding earthquakes to
+        // Create an empty ArrayList that we can start adding feedNews to
         List<FeedNews> feedNews = new ArrayList<>();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
@@ -167,10 +167,10 @@ public final class QueryUtils {
             JSONObject baseJsonResults = baseJsonResponse.getJSONObject(RESPONSE);
 
             // Extract the JSONArray associated with the key called "features",
-            // which represents a list of features (or earthquakes).
+            // which represents a list of features (or feedNews1).
             JSONArray feedNewsArray = baseJsonResults.getJSONArray(RESULTS);
 
-            // For each earthquake in the earthquakeArray, create an {@link FeedNews} object
+            // For each feed news in the feedNewsArray, create an {@link FeedNews} object
             for (int i = 0; i < feedNewsArray.length(); i++) {
                 JSONObject currentFeedNews = feedNewsArray.getJSONObject(i);
                 String title = currentFeedNews.getString(WEBTITLE);
@@ -196,7 +196,7 @@ public final class QueryUtils {
             Log.e("QueryUtils", "Problem parsing JSON results", e);
         }
 
-        // Return the list of earthquakes
+        // Return the list of feed news
         return feedNews;
     }
 }

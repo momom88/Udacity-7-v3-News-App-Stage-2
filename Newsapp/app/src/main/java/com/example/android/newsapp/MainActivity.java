@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<List<FeedNews>> {
+        LoaderManager.LoaderCallbacks<List<FeedNews>>,
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
      * Adapter for the list of feed news
@@ -65,6 +66,13 @@ public class MainActivity extends AppCompatActivity implements
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         mainListView.setAdapter(mAdapter);
+
+        // Obtain a reference to the SharedPreferences file for this app
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // And register to be notified of preference changes
+        // So we know when the user has adjusted the query settings
+        prefs.registerOnSharedPreferenceChangeListener(this);
+
         // Set an item click listener on the ListView, which sends an intent to a web browser
         // to open a website with more information about the selected feed news.
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri feedNewsUri = Uri.parse(currentFeedNews.getUrl());
 
-                // Create a new intent to view the earthquake URI
+                // Create a new intent to view the feedNews URI
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, feedNewsUri);
 
                 if (websiteIntent.resolveActivity(getPackageManager()) != null) {
@@ -111,6 +119,25 @@ public class MainActivity extends AppCompatActivity implements
         // Inflate the Options Menu we specified in XML
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        if (key.equals(getString(R.string.settings_page_key)) ||
+                key.equals(getString(R.string.settings_interest_key))){
+            // Clear the ListView as a new query will be kicked off
+            mAdapter.clear();
+
+            // Hide the empty state text view as the loading indicator will be displayed
+            mEmptyStateTextView.setVisibility(View.GONE);
+
+            // Show the loading indicator while new data is being fetched
+            View loadingIndicator = findViewById(R.id.loading_indicator);
+            loadingIndicator.setVisibility(View.VISIBLE);
+
+            // Restart the loader to requery the guardian as the query settings have been updated
+            getLoaderManager().restartLoader(FEED_NEWS_LOADER_ID, null, this);
+        }
     }
 
     @Override

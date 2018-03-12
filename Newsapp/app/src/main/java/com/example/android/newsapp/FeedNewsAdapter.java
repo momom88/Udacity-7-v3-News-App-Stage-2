@@ -16,8 +16,8 @@ import java.util.Date;
 import java.util.List;
 
 public class FeedNewsAdapter extends ArrayAdapter<FeedNews> {
-    public FeedNewsAdapter(Context context, List<FeedNews> earthquakes) {
-        super(context, 0, earthquakes);
+    public FeedNewsAdapter(Context context, List<FeedNews> feedNews1) {
+        super(context, 0, feedNews1);
     }
     // Create class ViewHolder for efficient memory usage
     static class ViewHolder {
@@ -25,7 +25,6 @@ public class FeedNewsAdapter extends ArrayAdapter<FeedNews> {
         private TextView mAuthorTextView;
         private TextView mDataTextView;
         private TextView mSectionTextView;
-        private int mPosition;
     }
 
     /**
